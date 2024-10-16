@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Box } from "@mui/material";
+import { Outlet } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useReducer } from "react";
+import {
+  AuthenticationContext,
+  AuthenticationDispatchContext,
+  AuthenticationReducer,
+} from "./contexts/AuthenticationContext";
 
 function App() {
+  const isAuthenticated = localStorage.getItem("quatro-token") !== null;
+  const [authenticated, dispatch] = useReducer(
+    AuthenticationReducer,
+    isAuthenticated,
+  );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthenticationContext.Provider value={authenticated}>
+      <AuthenticationDispatchContext.Provider value={dispatch}>
+        <Box className="App">
+          <NavBar />
+          <Box marginTop={"80px"}>
+            <ToastContainer position="top-center" />
+            <Outlet />
+          </Box>
+        </Box>
+      </AuthenticationDispatchContext.Provider>
+    </AuthenticationContext.Provider>
   );
 }
 
