@@ -1,6 +1,6 @@
 import "./App.css";
 import { Box } from "@mui/material";
-import { Outlet, BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,7 +10,7 @@ import {
   AuthenticationDispatchContext,
   AuthenticationReducer,
 } from "./contexts/AuthenticationContext";
-import SignupForm from "./components/SignupForm";
+import LandingPage from "./components/LandingPage";
 
 function App() {
   const isAuthenticated = localStorage.getItem("quatro-token") !== null;
@@ -18,9 +18,10 @@ function App() {
     AuthenticationReducer,
     isAuthenticated,
   );
+
   return (
-    <AuthenticationContext.Provider value={authenticated}>
-      <AuthenticationDispatchContext.Provider value={dispatch}>
+    <AuthenticationDispatchContext.Provider value={dispatch}>
+      <AuthenticationContext.Provider value={authenticated}>
         <Box className="App">
           <NavBar />
           <Box marginTop={"80px"}>
@@ -28,8 +29,8 @@ function App() {
             <Outlet />
           </Box>
         </Box>
-      </AuthenticationDispatchContext.Provider>
-    </AuthenticationContext.Provider>
+      </AuthenticationContext.Provider>
+    </AuthenticationDispatchContext.Provider>
   );
 }
 

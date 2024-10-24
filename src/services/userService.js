@@ -16,3 +16,13 @@ export const handleSignup = (email, password, confPassword, fname, lname) =>
     password: password,
     confirm_password: confPassword,
   });
+
+export const getUserDashboard = () =>
+  axios.get(`${API_URL}/journal/dashboard/`, {
+    headers: { Authorization: `Token ${localStorage.getItem("quatro-token")}` },
+  });
+
+export const getFoods = (fdc_ids) =>
+  axios.get(`${API_URL}/foods/${fdc_ids}}`, {
+    headers: { Authorization: `Token ${localStorage.getItem("quatro-token")}` },
+  });

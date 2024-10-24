@@ -11,7 +11,7 @@ export const AuthenticationReducer = (authenticated, action) => {
       authenticated = true;
       break;
     case "logout":
-      localStorage.removeItem("quatro-token", action.token);
+      localStorage.removeItem("quatro-token");
       authenticated = false;
       break;
     case "check-auth":
