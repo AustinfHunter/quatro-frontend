@@ -7,28 +7,15 @@ import {
     TextField,
     Button
 } from '@mui/material';
-import profilePicture from "../images/default_profile_picture.jpg";
 
 const Profile = () => {
 
     return (
-        <Paper>
-            <Container styles={styles.formcontainer}>
+        <Paper styles={styles.formcontainer}>
+            <Container>
                 <Grid2 container spacing={1}>
-                    <Grid2 size={6}>
-                        <Box
-                            component="img"
-                            src={profilePicture}
-                            alt="Default Profile Picture"
-                            sx = {{
-                                width: '150px',
-                                height: '150px',
-                                borderRadius: '50%',
-                                objectFit: 'cover',
-                            }}
-                        />
-                    </Grid2>
-                    <Grid2 size={6} styles={styles.editbutton}>
+                    <Grid2 size={8}></Grid2>
+                    <Grid2 size={4} styles={styles.editbutton}>
                         <Button variant="contained">Edit</Button>
                     </Grid2>
                     <Grid2 size={6}>
