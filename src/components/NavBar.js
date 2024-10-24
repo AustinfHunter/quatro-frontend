@@ -6,14 +6,14 @@ const NavBar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar>
         <Toolbar>
-          <Button color={"inherit"} variant="text" component={Link} to={"/"}>
+          <Button color={"inherit"} variant="text" component={Link} to={"/landingpage/"}>
             Home
           </Button>
           <Button
             color={"inherit"}
             variant="text"
             component={Link}
-            to={"login/"}
+            to={"/login/"}
           >
             Log In
           </Button>
