@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import LandingPage from "./components/LandingPage";
+import Logout from "./components/Logout";
 import Profile from "./components/Profile";
 
 const router = createBrowserRouter([
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
+      {
+        index: true,
+        element: <LandingPage />,
+      },
       {
         path: "login/",
         element: <LoginForm />,
@@ -23,12 +28,12 @@ const router = createBrowserRouter([
         element: <SignupForm />,
       },
       {
-        path: "landingpage/",
-        element: <LandingPage />
+        path: "logout/",
+        element: <Logout />,
       },
       {
         path: "profile/",
-        element: <Profile />
+        element: <Profile />,
       },
     ],
   },

@@ -1,16 +1,15 @@
 import "./App.css";
 import { Box } from "@mui/material";
-import { Outlet, BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import {
   AuthenticationContext,
   AuthenticationDispatchContext,
   AuthenticationReducer,
 } from "./contexts/AuthenticationContext";
-import SignupForm from "./components/SignupForm";
 
 function App() {
   const isAuthenticated = localStorage.getItem("quatro-token") !== null;
@@ -18,6 +17,7 @@ function App() {
     AuthenticationReducer,
     isAuthenticated,
   );
+
   return (
     <AuthenticationContext.Provider value={authenticated}>
       <AuthenticationDispatchContext.Provider value={dispatch}>
