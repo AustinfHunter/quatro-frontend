@@ -8,17 +8,12 @@ export const AuthenticationReducer = (authenticated, action) => {
   switch (action.type) {
     case "successful-login":
       localStorage.setItem("quatro-token", action.token);
-      authenticated = true;
-      break;
+      return true;
     case "logout":
       localStorage.removeItem("quatro-token");
-      authenticated = false;
-      break;
+      return false;
     case "check-auth":
-      if (localStorage.getItem("quatro-token") !== null) {
-        authenticated = true;
-      }
-      break;
+      return localStorage.getItem("quatro-token") !== null;
     default:
       throw Error("Uknown action in authentication context: " + action.type);
   }

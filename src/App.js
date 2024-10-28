@@ -4,13 +4,12 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import {
   AuthenticationContext,
   AuthenticationDispatchContext,
   AuthenticationReducer,
 } from "./contexts/AuthenticationContext";
-import LandingPage from "./components/LandingPage";
 
 function App() {
   const isAuthenticated = localStorage.getItem("quatro-token") !== null;
@@ -20,8 +19,8 @@ function App() {
   );
 
   return (
-    <AuthenticationDispatchContext.Provider value={dispatch}>
-      <AuthenticationContext.Provider value={authenticated}>
+    <AuthenticationContext.Provider value={authenticated}>
+      <AuthenticationDispatchContext.Provider value={dispatch}>
         <Box className="App">
           <NavBar />
           <Box marginTop={"80px"}>
@@ -29,8 +28,8 @@ function App() {
             <Outlet />
           </Box>
         </Box>
-      </AuthenticationContext.Provider>
-    </AuthenticationDispatchContext.Provider>
+      </AuthenticationDispatchContext.Provider>
+    </AuthenticationContext.Provider>
   );
 }
 

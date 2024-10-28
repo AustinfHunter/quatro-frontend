@@ -30,10 +30,10 @@ const LoginForm = () => {
         success: "Successfully signed in",
         error: "Failed to sign in",
       })
-      .then((res) =>
-        dispatch({ type: "successful-login", token: res.data.token }),
-      )
-      .then(navigate("/"))
+      .then((res) => {
+        dispatch({ type: "successful-login", token: res.data.token });
+        navigate("/");
+      })
       .catch((err) => {
         if (err.response.data.error) {
           setError(err.response.data.error);
