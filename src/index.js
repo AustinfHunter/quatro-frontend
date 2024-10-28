@@ -7,11 +7,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import LandingPage from "./components/LandingPage";
-<<<<<<< HEAD
 import Logout from "./components/Logout";
-=======
 import Profile from "./components/Profile";
->>>>>>> main
 
 const router = createBrowserRouter([
   {
@@ -31,17 +28,12 @@ const router = createBrowserRouter([
         element: <SignupForm />,
       },
       {
-<<<<<<< HEAD
         path: "logout/",
         element: <Logout />,
-=======
-        path: "landingpage/",
-        element: <LandingPage />
       },
       {
         path: "profile/",
-        element: <Profile />
->>>>>>> main
+        element: <Profile />,
       },
     ],
   },
