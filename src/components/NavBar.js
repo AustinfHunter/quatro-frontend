@@ -29,19 +29,66 @@ const LoginLogoutButton = () => {
   );
 };
 
-const NavBar = () => {
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar>
-        <Toolbar>
-          <Button
+
+const ProfileButton = () => {
+  const authenticated = useContext(AuthenticationContext);
+
+  if (authenticated) {
+    return (
+        <Button
+          color={"inherit"}
+          variant="text"
+          component={Link}
+          to={"/profile/"}
+        >
+          Profile
+        </Button>
+    )
+  }
+};
+
+const HomeButton = () => {
+  const authenticated = useContext(AuthenticationContext);
+
+  if (!authenticated) {
+    return (
+        <Button
             color={"inherit"}
             variant="text"
             component={Link}
             to={"/landingpage/"}
           >
             Home
-          </Button>
+        </Button>
+    )
+  }
+};
+
+const DashboardButton = () => {
+  const authenticated = useContext(AuthenticationContext);
+
+  if (authenticated) {
+    return (
+        <Button
+          color={"inherit"}
+          variant="text"
+          component={Link}
+          to={"/dashboard/"}
+        >
+          Dashboard
+        </Button>
+    )
+  }
+}
+
+const NavBar = () => {
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar>
+        <Toolbar>
+          <HomeButton />
+          <DashboardButton />
+          <ProfileButton />
           <LoginLogoutButton />
         </Toolbar>
       </AppBar>

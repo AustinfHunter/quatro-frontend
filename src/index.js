@@ -9,6 +9,7 @@ import SignupForm from "./components/SignupForm";
 import LandingPage from "./components/LandingPage";
 import Logout from "./components/Logout";
 import Profile from "./components/Profile";
+import Dashboard from "./components/Dashboard"
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "profile/",
         element: <Profile />,
+      },
+      {
+        path: "dashboard/",
+        element: <Dashboard />
       },
     ],
   },
