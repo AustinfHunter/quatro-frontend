@@ -18,8 +18,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build app
-        run: npm run build
+      - name: Set environment vars and build app
+        run: |
+          touch .env
+          echo REACT_APP_API_URL=$REACT_APP_API_URL >> .env
+          npm run build
+        env:
+          REACT_APP_API_URL: ${{vars.REACT_APP_API_URL}}
 
       - name: Upload to S3
         uses: shallwefootball/s3-upload-action@master
