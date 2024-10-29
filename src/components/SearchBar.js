@@ -1,12 +1,5 @@
 import { Search } from "@mui/icons-material";
-import {
-  Box,
-  FormControl,
-  InputAdornment,
-  Paper,
-  TextField,
-} from "@mui/material";
-import { useEffect, useState } from "react";
+import { Box, FormControl, InputAdornment, TextField } from "@mui/material";
 import { Form } from "react-router-dom";
 
 const SearchBar = ({ handleQuery }) => {

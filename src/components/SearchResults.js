@@ -1,6 +1,5 @@
 import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
 import {
-  Box,
   Button,
   Collapse,
   Table,
