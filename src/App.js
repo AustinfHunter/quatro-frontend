@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect, useReducer } from "react";
+import { useReducer } from "react";
 import {
   AuthenticationContext,
   AuthenticationDispatchContext,

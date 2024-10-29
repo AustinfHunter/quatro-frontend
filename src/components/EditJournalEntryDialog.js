@@ -10,11 +10,9 @@ import {
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { addToJournal, editJournalEntry } from "../services/userService";
+import { editJournalEntry } from "../services/userService";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-
-const today = new Date().toLocaleDateString();
 
 const EditJournalEntryDialog = ({
   entryId,

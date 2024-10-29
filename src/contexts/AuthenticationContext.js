@@ -8,10 +8,12 @@ export const AuthenticationReducer = (authenticated, action) => {
   switch (action.type) {
     case "successful-login":
       localStorage.setItem("quatro-token", action.token);
-      return true;
+      authenticated = true;
+      return authenticated;
     case "logout":
       localStorage.removeItem("quatro-token");
-      return false;
+      authenticated = false;
+      return authenticated;
     case "check-auth":
       return localStorage.getItem("quatro-token") !== null;
     default:
