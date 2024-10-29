@@ -21,7 +21,7 @@ jobs:
       - name: Set environment vars and build app
         run: |
           touch .env
-          echo REACT_APP_API_URL=$REACT_APP_API_URL >> .env
+          echo REACT_APP_API_ENDPOINT=$REACT_APP_API_URL >> .env
           npm run build
         env:
           REACT_APP_API_URL: ${{vars.REACT_APP_API_URL}}
