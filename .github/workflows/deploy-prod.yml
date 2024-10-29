@@ -1,0 +1,37 @@
+name: Deploy Production Environment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set environment vars and build app
+        run: |
+          touch .env
+          echo REACT_APP_API_ENDPOINT=$REACT_APP_API_URL >> .env
+          npm run build
+        env:
+          REACT_APP_API_URL: ${{vars.REACT_APP_API_URL}}
+
+      - name: Upload to S3
+        uses: shallwefootball/s3-upload-action@master
+        with:
+          aws_key_id: ${{secrets.AWS_SECRET_KEY}}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_bucket: ${{ secrets.AWS_PROD_BUCKET }}
+          source_dir: build/
+          destination_dir: ''
