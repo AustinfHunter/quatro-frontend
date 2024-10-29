@@ -1,19 +1,20 @@
-import { Box, CircularProgress, Paper, Table, Typography } from "@mui/material";
-import { Gauge, PieChart } from "@mui/x-charts";
-import { useEffect, useState } from "react";
-import { getUserDashboard } from "../services/userService";
+import { Box, CircularProgress, Paper, Typography } from "@mui/material";
+import { Gauge } from "@mui/x-charts";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import { useEffect, useRef, useState } from "react";
+import { getDashboardByDate } from "../services/userService";
+import JournalEntries from "./JournalEntries";
 import MacroChart from "./MacroChart";
-import SearchComponent from "./SearchComponent";
 
 const Charts = ({ data, loading }) => {
+  useEffect(() => {}, [data]);
   if (!data || loading) {
     return <CircularProgress />;
   }
   return (
-    <Paper style={{ width: "90%", margin: "auto", padding: "20px" }}>
-      <Typography variant="h4" textAlign={"left"}>
-        Dashboard
-      </Typography>
+    <>
       <Box
         display={"flex"}
         flexDirection={"row"}
@@ -43,30 +44,69 @@ const Charts = ({ data, loading }) => {
           hidden={data.journal_entries.length === 0}
         />
       </Box>
-    </Paper>
+    </>
   );
 };
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const selectedDate = useRef(dayjs(new Date()));
+  const dateData = useRef(new Map());
 
-  const fetchDashboardData = () =>
-    getUserDashboard()
+  const handleDateChange = (newDate) => {
+    selectedDate.current = newDate;
+    if (dateData.current.has(selectedDate.current.format("YYYY-MM-DD"))) {
+      setData(dateData.current.get(selectedDate.current.format("YYYY-MM-DD")));
+      return;
+    }
+    fetchDailyData(newDate);
+  };
+
+  const fetchDailyData = (date) =>
+    getDashboardByDate(date.format("YYYY-MM-DD"))
       .then((res) => {
         setData(res.data);
+        dateData.current.set(date.format("YYYY-MM-DD"), res.data);
       })
-      .then((data) => console.log(data))
       .catch((err) => console.log(err));
 
   useEffect(() => {
-    fetchDashboardData().then(setLoading(false));
+    fetchDailyData(selectedDate.current).then(setLoading(false));
   }, []);
 
   return (
-    <Paper style={{ width: "90%", margin: "auto", padding: "20px" }}>
+    <Paper
+      style={{
+        width: "90%",
+        margin: "auto",
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "left",
+      }}
+    >
+      <Typography variant="h4" textAlign={"left"}>
+        {selectedDate.current.format("YYYY-MM-DD") ===
+        dayjs(new Date()).format("YYYY-MM-DD")
+          ? "Today's Journal"
+          : `Journal From ${selectedDate.current.format("dddd, MMMM D, YYYY")}`}
+      </Typography>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"en"}>
+        <DatePicker
+          sx={{ marginTop: "1rem", maxWidth: "10%" }}
+          label="Date"
+          value={selectedDate.current}
+          onChange={(newDate) => handleDateChange(newDate)}
+        />
+      </LocalizationProvider>
       <Charts data={data} loading={loading} />
-      <SearchComponent onJournalUpdate={fetchDashboardData} />
+      <JournalEntries
+        data={data}
+        date={selectedDate.current}
+        onJournalUpdate={() => fetchDailyData(selectedDate.current)}
+        loading={loading}
+      />
     </Paper>
   );
 };

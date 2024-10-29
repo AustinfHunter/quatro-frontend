@@ -5,7 +5,7 @@ import { searchFoods } from "../services/userService";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 
-const SearchComponent = ({ onJournalUpdate }) => {
+const SearchComponent = ({ onJournalUpdate, date }) => {
   const [data, setData] = useState(null);
 
   const handleQuery = (query) => {
@@ -24,9 +24,16 @@ const SearchComponent = ({ onJournalUpdate }) => {
       flexDirection={"column"}
       justifyContent={"start"}
       alignItems={"start"}
+      minHeight={"700px"}
     >
       <SearchBar handleQuery={handleQuery} />
-      <SearchResults data={data} onJournalUpdate={onJournalUpdate} />
+      <Box minHeight="80%" width="100%">
+        <SearchResults
+          data={data}
+          onJournalUpdate={onJournalUpdate}
+          date={date}
+        />
+      </Box>
     </Box>
   );
 };

@@ -19,7 +19,7 @@ const SearchBar = ({ handleQuery }) => {
             placeholder="Search for foods"
             variant={"standard"}
             size={"normal"}
-            fullWidth={"true"}
+            fullWidth
             slotProps={{
               input: {
                 startAdornment: (

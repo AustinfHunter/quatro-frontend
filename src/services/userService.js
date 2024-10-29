@@ -38,6 +38,31 @@ export const addToJournal = (fdcId, date, amountConsumed) =>
     },
   );
 
+export const editJournalEntry = (id, fdcId, date, amountConsumed) =>
+  axios.put(
+    `${API_URL}/journal/entry/${id}`,
+    { fdc_id: fdcId, date: date, amount_consumed_grams: amountConsumed },
+    {
+      headers: {
+        Authorization: `Token ${localStorage.getItem("quatro-token")}`,
+      },
+    },
+  );
+
+export const deleteJournalEntry = (id) =>
+  axios.delete(`${API_URL}/journal/entry/${id}`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("quatro-token")}`,
+    },
+  });
+
+export const getDashboardByDate = (date) =>
+  axios.get(`${API_URL}/journal/dashboard/${date}/`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("quatro-token")}`,
+    },
+  });
+
 export const searchFoods = (query) =>
   axios.get(`${API_URL}/foods/search/${query}`, {
     headers: { Authorization: `Token ${localStorage.getItem("quatro-token")}` },
