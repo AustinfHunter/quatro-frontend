@@ -47,6 +47,7 @@ const AuthenticatedButtons = () => {
   );
 };
 
+
 const NavBar = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
