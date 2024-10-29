@@ -5,9 +5,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-const NutrientTable = ({ nutrients }) => {
+const JournalNutrientTable = ({ nutrients }) => {
   return (
-    <TableContainer style={{ marginBottom: "5px" }}>
+    <TableContainer>
       <Table aria-label="nutrient table (per 100 grams)">
         <TableHead>
           <TableRow>
@@ -21,30 +21,31 @@ const NutrientTable = ({ nutrients }) => {
           <TableRow>
             <TableCell>
               {
-                nutrients.find((nutrient) => nutrient.nutrientName === "Energy")
-                  .value
+                nutrients.find(
+                  (nutrient) => nutrient.nutrient.name === "Energy",
+                ).amount
               }
             </TableCell>
             <TableCell>
               {
                 nutrients.find(
-                  (nutrient) => nutrient.nutrientName === "Total lipid (fat)",
-                ).value
+                  (nutrient) => nutrient.nutrient.name === "Total lipid (fat)",
+                ).amount
               }
             </TableCell>
             <TableCell>
               {
                 nutrients.find(
                   (nutrient) =>
-                    nutrient.nutrientName === "Carbohydrate, by difference",
-                ).value
+                    nutrient.nutrient.name === "Carbohydrate, by difference",
+                ).amount
               }
             </TableCell>
             <TableCell>
               {
                 nutrients.find(
-                  (nutrient) => nutrient.nutrientName === "Protein",
-                ).value
+                  (nutrient) => nutrient.nutrient.name === "Protein",
+                ).amount
               }
             </TableCell>
           </TableRow>
@@ -54,4 +55,4 @@ const NutrientTable = ({ nutrients }) => {
   );
 };
 
-export default NutrientTable;
+export default JournalNutrientTable;

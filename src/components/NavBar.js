@@ -6,26 +6,44 @@ import {
   AuthenticationDispatchContext,
 } from "../contexts/AuthenticationContext";
 
-const LoginLogoutButton = () => {
+const AuthenticatedButtons = () => {
   const authenticated = useContext(AuthenticationContext);
   const dispatch = useContext(AuthenticationDispatchContext);
   if (authenticated) {
     return (
-      <Button
-        color={"inherit"}
-        variant="text"
-        component={Link}
-        to={"/"}
-        onClick={() => dispatch({ type: "logout" })}
-      >
-        Logout
-      </Button>
+      <>
+        <Button color={"inherit"} variant="text" component={Link} to={"/"}>
+          Dashboard
+        </Button>
+        <Button
+          color={"inherit"}
+          variant="text"
+          component={Link}
+          to={"/profile"}
+        >
+          Profile
+        </Button>
+        <Button
+          color={"inherit"}
+          variant="text"
+          component={Link}
+          to={"/"}
+          onClick={() => dispatch({ type: "logout" })}
+        >
+          Logout
+        </Button>
+      </>
     );
   }
   return (
-    <Button color={"inherit"} variant="text" component={Link} to={"login/"}>
-      Login
-    </Button>
+    <>
+      <Button color={"inherit"} variant="text" component={Link} to={"/"}>
+        Home
+      </Button>
+      <Button color={"inherit"} variant="text" component={Link} to={"login/"}>
+        Login
+      </Button>
+    </>
   );
 };
 
@@ -34,15 +52,7 @@ const NavBar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar>
         <Toolbar>
-          <Button
-            color={"inherit"}
-            variant="text"
-            component={Link}
-            to={"/landingpage/"}
-          >
-            Home
-          </Button>
-          <LoginLogoutButton />
+          <AuthenticatedButtons />
         </Toolbar>
       </AppBar>
     </Box>

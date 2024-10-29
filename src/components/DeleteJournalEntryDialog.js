@@ -8,22 +8,19 @@ import {
   TextField,
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { useState } from "react";
 import { toast } from "react-toastify";
-import { addToJournal } from "../services/userService";
+import { deleteJournalEntry } from "../services/userService";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-const AddToJournalDialog = ({
-  fdcId,
+const DeleteJournalEntryDialog = ({
+  entryId,
   description,
+  date,
+  amountConsumed,
   open,
   setOpen,
   onJournalUpdate,
-  initialDate,
 }) => {
-  const [date, setDate] = useState(initialDate);
-  const [amountConsumed, setAmountConsumed] = useState(0);
-  console.log(date);
   return (
     <Dialog
       open={open}
@@ -34,15 +31,11 @@ const AddToJournalDialog = ({
           e.preventDefault();
           toast
             .promise(
-              addToJournal(
-                fdcId,
-                date.format("YYYY-MM-DD"),
-                amountConsumed,
-              ).then(() => onJournalUpdate()),
+              deleteJournalEntry(entryId).then(() => onJournalUpdate()),
               {
-                pending: "Adding to journal...",
-                success: "Successfully added to journal!",
-                error: "Failed to add food to journal :(",
+                pending: `Removing ${description} from journal...`,
+                success: `Successfully removed ${description} from journal!`,
+                error: `Failed to remove ${description} from journal :(`,
               },
             )
             .catch((error) => {
@@ -52,7 +45,9 @@ const AddToJournalDialog = ({
         },
       }}
     >
-      <DialogTitle>Add entry for {description} to journal</DialogTitle>
+      <DialogTitle>
+        Are you sure you want to remove {description} from your journal?
+      </DialogTitle>
       <DialogContent
         style={{
           padding: "20px",
@@ -63,11 +58,7 @@ const AddToJournalDialog = ({
       >
         <FormControl>
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"en"}>
-            <DatePicker
-              label="Date"
-              value={date}
-              onChange={(newDate) => setDate(newDate)}
-            />
+            <DatePicker label="Date" value={date} disabled />
           </LocalizationProvider>
         </FormControl>
         <FormControl style={{ marginTop: "20px" }}>
@@ -75,7 +66,7 @@ const AddToJournalDialog = ({
             label={"Amount Consumed (grams)"}
             type={"number"}
             value={amountConsumed}
-            onChange={(e) => setAmountConsumed(e.target.value)}
+            disabled
           />
         </FormControl>
       </DialogContent>
@@ -83,9 +74,9 @@ const AddToJournalDialog = ({
         <Button color={"error"} onClick={() => setOpen(false)}>
           Cancel
         </Button>
-        <Button type={"submit"}>Add to journal</Button>
+        <Button type={"submit"}>Delete Entry</Button>
       </DialogActions>
     </Dialog>
   );
 };
-export default AddToJournalDialog;
+export default DeleteJournalEntryDialog;

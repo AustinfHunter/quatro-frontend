@@ -10,20 +10,24 @@ import {
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { addToJournal } from "../services/userService";
+import { addToJournal, editJournalEntry } from "../services/userService";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
-const AddToJournalDialog = ({
+const today = new Date().toLocaleDateString();
+
+const EditJournalEntryDialog = ({
+  entryId,
   fdcId,
   description,
+  initialDate,
+  initialAmountConsumed,
   open,
   setOpen,
   onJournalUpdate,
-  initialDate,
 }) => {
-  const [date, setDate] = useState(initialDate);
-  const [amountConsumed, setAmountConsumed] = useState(0);
-  console.log(date);
+  const [date, setDate] = useState(dayjs(initialDate));
+  const [amountConsumed, setAmountConsumed] = useState(initialAmountConsumed);
   return (
     <Dialog
       open={open}
@@ -34,15 +38,16 @@ const AddToJournalDialog = ({
           e.preventDefault();
           toast
             .promise(
-              addToJournal(
+              editJournalEntry(
+                entryId,
                 fdcId,
                 date.format("YYYY-MM-DD"),
                 amountConsumed,
               ).then(() => onJournalUpdate()),
               {
-                pending: "Adding to journal...",
-                success: "Successfully added to journal!",
-                error: "Failed to add food to journal :(",
+                pending: `Updating journal...`,
+                success: "Successfully updated journal!",
+                error: "Failed to update journal :(",
               },
             )
             .catch((error) => {
@@ -52,7 +57,7 @@ const AddToJournalDialog = ({
         },
       }}
     >
-      <DialogTitle>Add entry for {description} to journal</DialogTitle>
+      <DialogTitle>Edit entry for {description} in journal</DialogTitle>
       <DialogContent
         style={{
           padding: "20px",
@@ -83,9 +88,9 @@ const AddToJournalDialog = ({
         <Button color={"error"} onClick={() => setOpen(false)}>
           Cancel
         </Button>
-        <Button type={"submit"}>Add to journal</Button>
+        <Button type={"submit"}>Update Entry</Button>
       </DialogActions>
     </Dialog>
   );
 };
-export default AddToJournalDialog;
+export default EditJournalEntryDialog;

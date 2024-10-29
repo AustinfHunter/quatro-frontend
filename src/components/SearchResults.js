@@ -13,7 +13,7 @@ import { useState } from "react";
 import AddToJournalDialog from "./AddToJournalDialog";
 import NutrientTable from "./NutrientTable";
 
-const ResultsTableRow = ({ data, onJournalUpdate }) => {
+const ResultsTableRow = ({ data, onJournalUpdate, date }) => {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [journalOpen, setJournalOpen] = useState(false);
   return (
@@ -29,12 +29,7 @@ const ResultsTableRow = ({ data, onJournalUpdate }) => {
         </TableCell>
         <TableCell align={"center"}>
           <Button onClick={() => setJournalOpen(true)}>Add to Journal</Button>
-          <Button
-            onClick={() => setDetailsOpen(!detailsOpen)}
-            display={"flex"}
-            flexDirection={"row"}
-            alignItems="center"
-          >
+          <Button onClick={() => setDetailsOpen(!detailsOpen)}>
             Nutrition Details
             {detailsOpen === true ? <ArrowDropUp /> : <ArrowDropDown />}
           </Button>
@@ -43,7 +38,7 @@ const ResultsTableRow = ({ data, onJournalUpdate }) => {
       <TableRow>
         <TableCell style={{ paddingTop: 0, paddingBottom: 0 }} colSpan={3}>
           <Collapse in={detailsOpen} timeout={"auto"} unmountOnExit>
-            <NutrientTable data={data.foodNutrients} />
+            <NutrientTable nutrients={data.foodNutrients} />
           </Collapse>
         </TableCell>
       </TableRow>
@@ -53,25 +48,26 @@ const ResultsTableRow = ({ data, onJournalUpdate }) => {
         open={journalOpen}
         setOpen={setJournalOpen}
         onJournalUpdate={onJournalUpdate}
+        initialDate={date}
       />
     </>
   );
 };
 
-const SearchResults = ({ data, onJournalUpdate }) => {
+const SearchResults = ({ data, onJournalUpdate, date }) => {
   if (!data) {
     return null;
   }
 
   return (
-    <TableContainer sx={{ maxHeight: "800px" }}>
+    <TableContainer
+      sx={{ maxHeight: "600px" }}
+      style={{ width: "100%", height: "80%" }}
+    >
       <Table stickyHeader aria-label={"food search results"}>
         <TableHead>
           <TableRow>
-            <TableCell
-              sx={{ fontWeight: "bold", fontSize: "1.3rem" }}
-              component={"TH"}
-            >
+            <TableCell sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
               Description
             </TableCell>
             <TableCell sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
@@ -87,9 +83,11 @@ const SearchResults = ({ data, onJournalUpdate }) => {
         </TableHead>
         {data.foods.map((food) => (
           <ResultsTableRow
+            key={food.fdcId}
             data={food}
             handleViewDetails={() => {}}
             onJournalUpdate={onJournalUpdate}
+            date={date}
           />
         ))}
       </Table>
