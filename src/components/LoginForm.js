@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useContext, useState } from "react";
-import { Link as RouterLink, redirect, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthenticationDispatchContext } from "../contexts/AuthenticationContext";
 import { handleLogin } from "../services/userService";
