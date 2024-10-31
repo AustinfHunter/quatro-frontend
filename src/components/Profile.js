@@ -139,17 +139,4 @@ const Profile = () => {
   );
 };
 
-const styles = {
-  formcontainer: {
-    height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-  },
-  editbutton: {
-    display: "flex",
-    justifyContent: "flex-end",
-    marginTop: "50px",
-  },
-};
-
 export default Profile;
