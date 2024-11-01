@@ -67,3 +67,13 @@ export const searchFoods = (query) =>
   axios.get(`${API_URL}/foods/search/${query}`, {
     headers: { Authorization: `Token ${localStorage.getItem("quatro-token")}` },
   });
+
+export const getUserProfile = () =>
+  axios.get(`${API_URL}/users/account/`, {
+    headers: { Authorization: `Token ${localStorage.getItem("quatro-token")}` },
+  });
+
+export const updateUserProfile = (profile) =>
+  axios.put(`${API_URL}/users/fitness-profile/`, profile, {
+    headers: { Authorization: `Token ${localStorage.getItem("quatro-token")}` },
+  });

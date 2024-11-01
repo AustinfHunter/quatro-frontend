@@ -31,12 +31,12 @@ const Charts = ({ data, loading }) => {
             valueMin={0}
             valueMax={
               data.daily_macros.calorie_limit
-                ? Math.round(data.daily_macros.calorie_limit)
+                ? Math.round(data.daily_macros.daily_calorie_limit)
                 : 2000
             }
           />
           <Typography variant="caption">
-            {`You have ${Math.round((data.daily_macros.calorie_limit ? data.daily_macros.calorie_limit : 2000) - data.daily_macros.total_calories)} calories remaining for the day.`}
+            {`You have ${Math.round((data.daily_macros.daily_calorie_limit ? data.daily_macros.daily_calorie_limit : 2000) - data.daily_macros.total_calories)} calories remaining for the day.`}
           </Typography>
         </Box>
         <MacroChart
