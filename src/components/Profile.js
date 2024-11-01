@@ -8,8 +8,11 @@ import {
   MenuItem,
   FormControl,
   Typography,
+  CircularProgress,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { getUserProfile, updateUserProfile } from "../services/userService";
 
 const tmpProfile = {
   height: 177.8,
@@ -22,7 +25,7 @@ const tmpProfile = {
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [profile, setProfile] = useState(tmpProfile);
+  const [profile, setProfile] = useState(null);
 
   const handleProfileChange = (e) =>
     setProfile((prev) => ({
@@ -31,8 +34,26 @@ const Profile = () => {
     }));
 
   const handleEditClicked = () => {
+    if (isEditing) {
+      toast.promise(
+        updateUserProfile(profile).then((res) => setProfile(res.data)),
+        {
+          pending: "Updating profile information...",
+          success: "Successfully updated profile information!",
+          error: "Failed to update profile information",
+        },
+      );
+    }
     setIsEditing(!isEditing);
   };
+
+  useEffect(() => {
+    getUserProfile().then((res) => setProfile(res.data.fitness_profile));
+  }, []);
+
+  if (!profile) {
+    return <CircularProgress />;
+  }
 
   return (
     <Paper

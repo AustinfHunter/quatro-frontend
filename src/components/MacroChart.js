@@ -3,7 +3,7 @@ import { PieChart } from "@mui/x-charts";
 
 const MacroChart = ({ data, hidden }) => {
   const chartData = Object.entries(data).map(([k, v], i) => {
-    if (k === "total_calories") {
+    if (k === "total_calories" || k === "daily_calorie_limit") {
       return null;
     }
     return { id: i, value: v, label: k.split("_")[1] };
