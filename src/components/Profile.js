@@ -15,9 +15,9 @@ import { toast } from "react-toastify";
 import { getUserProfile, updateUserProfile } from "../services/userService";
 
 const tmpProfile = {
-  height: 177.8,
-  current_weight: 83.9146,
-  goal_weight: 88.4505,
+  height: 177,
+  current_weight: 83,
+  goal_weight: 88,
   activity_level: 300,
   goal_weight_velocity: 0.8,
   sex: "M",
@@ -48,7 +48,11 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    getUserProfile().then((res) => setProfile(res.data.fitness_profile));
+    getUserProfile().then((res) =>
+      res.data.fitness_profile
+        ? setProfile(res.data.fitness_profile)
+        : setProfile(tmpProfile),
+    );
   }, []);
 
   if (!profile) {
@@ -82,7 +86,6 @@ const Profile = () => {
               onChange={handleProfileChange}
               disabled={!isEditing}
               type="number"
-              step={0.1}
               defaultValue={profile.height}
             />
           </FormControl>
@@ -92,7 +95,6 @@ const Profile = () => {
               name="current_weight"
               onChange={handleProfileChange}
               type="number"
-              step={0.1}
               disabled={!isEditing}
               defaultValue={profile.current_weight}
             />
@@ -118,7 +120,6 @@ const Profile = () => {
               name="goal_weight"
               onChange={handleProfileChange}
               type="number"
-              step={0.1}
               disabled={!isEditing}
               defaultValue={profile.goal_weight}
             />
