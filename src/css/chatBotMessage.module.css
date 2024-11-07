@@ -1,0 +1,14 @@
+.message {
+	font-size: 1.1rem;
+}
+
+.message ol, ul {
+	list-style-type: none;
+	text-align: start;
+	margin-left: 10%;
+	margin-right: 15%;
+}
+
+.message li {
+	margin-bottom: 1rem;
+}
