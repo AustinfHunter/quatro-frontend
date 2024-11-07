@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   CircularProgress,
   TextField,
   Typography,
@@ -8,7 +7,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { Send } from "@mui/icons-material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { queryBot } from "../services/botService";
 
