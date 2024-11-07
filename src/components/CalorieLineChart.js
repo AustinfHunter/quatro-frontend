@@ -1,4 +1,3 @@
-import {useState, useEffect} from "react";
 import {Box} from "@mui/material"
 import {LineChart} from "@mui/x-charts";
 import dayjs from "dayjs";
