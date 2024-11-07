@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { getDashboardByDate } from "../services/userService";
 import JournalEntries from "./JournalEntries";
 import MacroChart from "./MacroChart";
+import CalorieLineChart from "./CalorieLineChart";
 
 const Charts = ({ data, loading }) => {
   useEffect(() => {}, [data]);
@@ -58,9 +59,9 @@ const Dashboard = () => {
     selectedDate.current = newDate;
     if (dateData.current.has(selectedDate.current.format("YYYY-MM-DD"))) {
       setData(dateData.current.get(selectedDate.current.format("YYYY-MM-DD")));
-      return;
+    } else {
+        fetchDailyData(newDate);
     }
-    fetchDailyData(newDate);
   };
 
   const fetchDailyData = (date) =>
@@ -72,7 +73,7 @@ const Dashboard = () => {
       .catch((err) => console.log(err));
 
   useEffect(() => {
-    fetchDailyData(selectedDate.current).then(setLoading(false));
+    fetchDailyData(selectedDate.current).then(() => setLoading(false));
   }, []);
 
   return (
@@ -101,6 +102,7 @@ const Dashboard = () => {
         />
       </LocalizationProvider>
       <Charts data={data} loading={loading} />
+      <CalorieLineChart dateData={dateData} selectedDate={selectedDate}/>
       <JournalEntries
         data={data}
         date={selectedDate.current}
