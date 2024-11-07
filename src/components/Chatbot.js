@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import { Send } from "@mui/icons-material";
 import { useState, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+import { queryBot } from "../services/botService";
 
 const MessageBubble = ({ text, sender }) => (
   <Box
@@ -22,7 +24,11 @@ const MessageBubble = ({ text, sender }) => (
       alignSelf: sender === "user" ? "flex-end" : "flex-start",
     }}
   >
-    <Typography variant="body1">{text}</Typography>
+    {sender === "user" ? (
+      <Typography variant="body1">{text}</Typography>
+    ) : (
+      <ReactMarkdown>{text}</ReactMarkdown>
+    )}
   </Box>
 );
 
@@ -32,20 +38,20 @@ const Chatbot = ({ initialMessages = [], loading }) => {
   const [isSending, setIsSending] = useState(false);
 
   const handleSendMessage = () => {
-    if (input.trim() === "") return;
+    if (input.trim() === "" || isSending) return;
     const userMessage = { text: input, sender: "user" };
     setMessages([...messages, userMessage]);
     setInput("");
     setIsSending(true);
 
-    setTimeout(() => {
+    queryBot(input).then((res) => {
       const botResponse = {
-        text: "Hello! How can I help you today?",
+        text: res.data.response,
         sender: "bot",
       };
       setMessages((prevMessages) => [...prevMessages, botResponse]);
       setIsSending(false);
-    }, 1000);
+    });
   };
 
   return (
@@ -57,7 +63,7 @@ const Chatbot = ({ initialMessages = [], loading }) => {
       margin="auto"
       sx={{ borderRadius: "8px" }}
       height={"80vh"}
-      width={"40%"}
+      width={"80%"}
       component={Paper}
       elevation={3}
       padding={"1rem"}
@@ -74,11 +80,12 @@ const Chatbot = ({ initialMessages = [], loading }) => {
         {messages.map((msg, index) => (
           <MessageBubble key={index} text={msg.text} sender={msg.sender} />
         ))}
-        {loading && (
-          <Box display="flex" justifyContent="center" p={2}>
-            <CircularProgress />
-          </Box>
-        )}
+        {loading ||
+          (isSending && (
+            <Box display="flex" justifyContent="center" p={2}>
+              <CircularProgress />
+            </Box>
+          ))}
       </Box>
 
       <Box display="flex" alignItems="center" width="100%" p={2} gap={1}>
