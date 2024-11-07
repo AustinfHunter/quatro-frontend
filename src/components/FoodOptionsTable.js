@@ -1,4 +1,4 @@
-import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
+import { ArrowDropDown, ArrowDropUp, Delete } from "@mui/icons-material";
 import {
   Button,
   Collapse,
@@ -9,13 +9,14 @@ import {
   TableRow,
 } from "@mui/material";
 import { useState } from "react";
-import AddToJournalDialog from "./AddToJournalDialog";
-import FoodDetails from "./FoodDetails";
-import NutrientTable from "./NutrientTable";
+import AbridgedNutrientTable from "./AbridgedNutrientTable";
 
-const ResultsTableRow = ({ data, onJournalUpdate, date }) => {
+const FoodTableRow = ({ data, handleDelete }) => {
   const [detailsOpen, setDetailsOpen] = useState(false);
-  const [journalOpen, setJournalOpen] = useState(false);
+  console.log(data);
+  if (!data) {
+    return null;
+  }
   return (
     <>
       <TableRow>
@@ -28,34 +29,27 @@ const ResultsTableRow = ({ data, onJournalUpdate, date }) => {
           {data.brandOwner === "" ? "N/A" : data.brandOwner}
         </TableCell>
         <TableCell align={"center"}>
-          <Button onClick={() => setJournalOpen(true)}>Add to Journal</Button>
           <Button onClick={() => setDetailsOpen(!detailsOpen)}>
-            Nutrition Details
+            Details
             {detailsOpen === true ? <ArrowDropUp /> : <ArrowDropDown />}
+          </Button>
+          <Button onClick={() => handleDelete(data.fdcId)}>
+            <Delete color={"error"} />
           </Button>
         </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingTop: 0, paddingBottom: 0 }} colSpan={3}>
           <Collapse in={detailsOpen} timeout={"auto"} unmountOnExit>
-            <NutrientTable nutrients={data.foodNutrients} />
-            <FoodDetails fdcId={data.fdcId} />
+            <AbridgedNutrientTable nutrients={data.foodNutrients} />
           </Collapse>
         </TableCell>
       </TableRow>
-      <AddToJournalDialog
-        fdcId={data.fdcId}
-        description={data.description}
-        open={journalOpen}
-        setOpen={setJournalOpen}
-        onJournalUpdate={onJournalUpdate}
-        initialDate={date}
-      />
     </>
   );
 };
 
-const SearchResults = ({ data, onJournalUpdate, date }) => {
+const FoodOptionsTable = ({ data, handleDelete }) => {
   if (!data) {
     return null;
   }
@@ -68,10 +62,16 @@ const SearchResults = ({ data, onJournalUpdate, date }) => {
       <Table stickyHeader aria-label={"food search results"}>
         <TableHead>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
+            <TableCell
+              sx={{ fontWeight: "bold", fontSize: "1.3rem" }}
+              align="left"
+            >
               Description
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
+            <TableCell
+              sx={{ fontWeight: "bold", fontSize: "1.3rem" }}
+              align="left"
+            >
               Brand
             </TableCell>
             <TableCell
@@ -82,13 +82,11 @@ const SearchResults = ({ data, onJournalUpdate, date }) => {
             </TableCell>
           </TableRow>
         </TableHead>
-        {data.foods.map((food) => (
-          <ResultsTableRow
+        {data.map((food) => (
+          <FoodTableRow
             key={food.fdcId}
             data={food}
-            handleViewDetails={() => {}}
-            onJournalUpdate={onJournalUpdate}
-            date={date}
+            handleDelete={handleDelete}
           />
         ))}
       </Table>
@@ -96,4 +94,4 @@ const SearchResults = ({ data, onJournalUpdate, date }) => {
   );
 };
 
-export default SearchResults;
+export default FoodOptionsTable;

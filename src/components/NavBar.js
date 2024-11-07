@@ -27,6 +27,14 @@ const AuthenticatedButtons = () => {
           color={"inherit"}
           variant="text"
           component={Link}
+          to={"/managefoods"}
+        >
+          Manage Foods
+        </Button>
+        <Button
+          color={"inherit"}
+          variant="text"
+          component={Link}
           to={"/quatbot"}
         >
           QuatBot

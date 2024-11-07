@@ -77,3 +77,76 @@ export const updateUserProfile = (profile) =>
   axios.put(`${API_URL}/users/fitness-profile/`, profile, {
     headers: { Authorization: `Token ${localStorage.getItem("quatro-token")}` },
   });
+
+export const addFoodPreference = (fdcId, isDisliked) =>
+  axios.post(
+    `${API_URL}/foods/preferences/create/${fdcId}`,
+    { dislikes: isDisliked },
+    {
+      headers: {
+        Authorization: `Token ${localStorage.getItem("quatro-token")}`,
+      },
+    },
+  );
+
+export const updateFoodPreference = (fdcId, isDisliked) =>
+  axios.put(
+    `${API_URL}/foods/preferences/${fdcId}`,
+    { dislikes: isDisliked },
+    {
+      headers: {
+        Authorization: `Token ${localStorage.getItem("quatro-token")}`,
+      },
+    },
+  );
+
+export const deleteFoodPreference = (fdcId) =>
+  axios.delete(`${API_URL}/foods/preferences/${fdcId}`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("quatro-token")}`,
+    },
+  });
+
+export const addFoodRestriction = (fdcId, reason) =>
+  axios.post(
+    `${API_URL}/foods/restrictions/create/${fdcId}`,
+    { reason: reason },
+    {
+      headers: {
+        Authorization: `Token ${localStorage.getItem("quatro-token")}`,
+      },
+    },
+  );
+
+export const updateFoodRestriction = (fdcId, reason) =>
+  axios.put(
+    `${API_URL}/foods/restrictions/${fdcId}`,
+    { reason: reason },
+    {
+      headers: {
+        Authorization: `Token ${localStorage.getItem("quatro-token")}`,
+      },
+    },
+  );
+
+export const deleteFoodRestriction = (fdcId) =>
+  axios.delete(`${API_URL}/foods/restrictions/${fdcId}`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("quatro-token")}`,
+    },
+  });
+
+export const getFoodDetail = (fdc_id) =>
+  axios.get(`${API_URL}/foods/details/${fdc_id}`, {
+    headers: { Authorization: `Token ${localStorage.getItem("quatro-token")}` },
+  });
+
+export const getPreferences = () =>
+  axios.get(`${API_URL}/foods/preferences/`, {
+    headers: { Authorization: `Token ${localStorage.getItem("quatro-token")}` },
+  });
+
+export const getRestrictions = () =>
+  axios.get(`${API_URL}/foods/restrictions/`, {
+    headers: { Authorization: `Token ${localStorage.getItem("quatro-token")}` },
+  });

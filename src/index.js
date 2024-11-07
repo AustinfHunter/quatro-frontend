@@ -10,6 +10,7 @@ import LandingPage from "./components/LandingPage";
 import Logout from "./components/Logout";
 import Profile from "./components/Profile";
 import Dashboard from "./components/Dashboard";
+import ManageFoods from "./pages/ManageFoods";
 import Chatbot from "./components/Chatbot";
 
 const router = createBrowserRouter([
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "dashboard/",
         element: <Dashboard />,
+      },
+      {
+        path: "managefoods/",
+        element: <ManageFoods />,
       },
       {
         path: "quatbot/",
