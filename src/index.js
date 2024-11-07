@@ -9,7 +9,8 @@ import SignupForm from "./components/SignupForm";
 import LandingPage from "./components/LandingPage";
 import Logout from "./components/Logout";
 import Profile from "./components/Profile";
-import Dashboard from "./components/Dashboard"
+import Dashboard from "./components/Dashboard";
+import ManageFoods from "./pages/ManageFoods";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,11 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard/",
-        element: <Dashboard />
+        element: <Dashboard />,
+      },
+      {
+        path: "managefoods/",
+        element: <ManageFoods />,
       },
     ],
   },

@@ -23,7 +23,6 @@ const AddToJournalDialog = ({
 }) => {
   const [date, setDate] = useState(initialDate);
   const [amountConsumed, setAmountConsumed] = useState(0);
-  console.log(date);
   return (
     <Dialog
       open={open}
