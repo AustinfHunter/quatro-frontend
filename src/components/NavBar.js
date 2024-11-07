@@ -37,7 +37,6 @@ const AuthenticatedButtons = () => {
           component={Link}
           to={"/quatbot"}
         >
-          {" "}
           QuatBot
         </Button>
         <Button
