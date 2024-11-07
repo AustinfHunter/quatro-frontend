@@ -10,6 +10,7 @@ import { Send } from "@mui/icons-material";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { queryBot } from "../services/botService";
+import styles from "../css/chatBotMessage.module.css";
 
 const MessageBubble = ({ text, sender }) => (
   <Box
@@ -26,7 +27,9 @@ const MessageBubble = ({ text, sender }) => (
     {sender === "user" ? (
       <Typography variant="body1">{text}</Typography>
     ) : (
-      <ReactMarkdown>{text}</ReactMarkdown>
+      <div className={styles.message}>
+        <ReactMarkdown>{text}</ReactMarkdown>
+      </div>
     )}
   </Box>
 );
