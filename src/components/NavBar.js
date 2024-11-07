@@ -27,6 +27,14 @@ const AuthenticatedButtons = () => {
           color={"inherit"}
           variant="text"
           component={Link}
+          to={"/quatbot"}
+        >
+          QuatBot
+        </Button>
+        <Button
+          color={"inherit"}
+          variant="text"
+          component={Link}
           to={"/"}
           onClick={() => dispatch({ type: "logout" })}
         >
@@ -46,7 +54,6 @@ const AuthenticatedButtons = () => {
     </>
   );
 };
-
 
 const NavBar = () => {
   return (
