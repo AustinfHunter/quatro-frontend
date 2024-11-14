@@ -150,3 +150,8 @@ export const getRestrictions = () =>
   axios.get(`${API_URL}/foods/restrictions/`, {
     headers: { Authorization: `Token ${localStorage.getItem("quatro-token")}` },
   });
+
+export const getJournalTrends = (start_date) =>
+  axios.get(`${API_URL}/journal/data/trend/${start_date}`, {
+    headers: { Authorization: `Token ${localStorage.getItem("quatro-token")}` },
+  });
