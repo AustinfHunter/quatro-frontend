@@ -52,6 +52,7 @@ const Charts = ({ data, loading }) => {
 const Dashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [chartShouldUpdate, setChartShouldUpdate] = useState(false);
   const selectedDate = useRef(dayjs(new Date()));
   const dateData = useRef(new Map());
 
@@ -60,7 +61,7 @@ const Dashboard = () => {
     if (dateData.current.has(selectedDate.current.format("YYYY-MM-DD"))) {
       setData(dateData.current.get(selectedDate.current.format("YYYY-MM-DD")));
     } else {
-        fetchDailyData(newDate);
+      fetchDailyData(newDate);
     }
   };
 
@@ -68,6 +69,7 @@ const Dashboard = () => {
     getDashboardByDate(date.format("YYYY-MM-DD"))
       .then((res) => {
         setData(res.data);
+        setChartShouldUpdate(true);
         dateData.current.set(date.format("YYYY-MM-DD"), res.data);
       })
       .catch((err) => console.log(err));
@@ -102,7 +104,10 @@ const Dashboard = () => {
         />
       </LocalizationProvider>
       <Charts data={data} loading={loading} />
-      <CalorieLineChart dateData={dateData} selectedDate={selectedDate}/>
+      <CalorieLineChart
+        shouldUpdate={chartShouldUpdate}
+        setShouldUpdate={setChartShouldUpdate}
+      />
       <JournalEntries
         data={data}
         date={selectedDate.current}
