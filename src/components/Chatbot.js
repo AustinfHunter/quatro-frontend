@@ -48,7 +48,7 @@ const Chatbot = ({ initialMessages = [], loading }) => {
 
     queryBot(input).then((res) => {
       const botResponse = {
-        text: res.data.response,
+        text: res.data.recipe,
         sender: "bot",
       };
       setMessages((prevMessages) => [...prevMessages, botResponse]);
@@ -89,7 +89,6 @@ const Chatbot = ({ initialMessages = [], loading }) => {
             </Box>
           ))}
       </Box>
-
       <Box display="flex" alignItems="center" width="100%" p={2} gap={1}>
         <TextField
           fullWidth
