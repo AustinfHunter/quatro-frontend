@@ -69,11 +69,14 @@ const ManageFoods = () => {
     );
 
   const handleDeleteRestriction = (fdcId) =>
-    toast.promise(deleteFoodRestriction(fdcId).then(fetchRestrictions), {
-      pending: "Deleting restriction...",
-      success: "Successfully deleted restriction!",
-      error: "Failed to delete restriction :(",
-    });
+    toast.promise(
+      deleteFoodRestriction(fdcId).then(() => fetchRestrictions()),
+      {
+        pending: "Deleting restriction...",
+        success: "Successfully deleted restriction!",
+        error: "Failed to delete restriction :(",
+      },
+    );
 
   if (!preferences || !restrictions) {
     return <CircularProgress />;
