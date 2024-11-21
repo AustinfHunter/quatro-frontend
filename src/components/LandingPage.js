@@ -90,7 +90,7 @@ function LandingPage() {
           </LandingPageCard>
           <LandingPageCard
             image={journalExampleImage}
-            title={"Journalling and Tracking"}
+            title={"Journaling and Tracking"}
             imgRight
           >
             <Typography variant={"p"} fontSize={"1.2rem"} textAlign={"left"}>
