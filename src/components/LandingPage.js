@@ -94,10 +94,10 @@ function LandingPage() {
             imgRight
           >
             <Typography variant={"p"} fontSize={"1.2rem"} textAlign={"left"}>
-              Quatro gives you the knowledge you need to make better decisions
-              with every meal. Get personalized feedback on your daily intake,
-              and understand how small choices can lead to big health
-              improvements over time.
+              Quatro’s journaling feature allows you to easily log your meals
+              and snacks, helping you stay on top of your daily nutrition. Track
+              what you eat throughout the day to gain valuable insights and
+              ensure you're staying aligned with your health and fitness goals.
             </Typography>
           </LandingPageCard>
         </Container>

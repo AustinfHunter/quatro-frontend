@@ -13,7 +13,7 @@ const LandingPageCard = ({ children, image, title, imgRight }) => {
         }}
       >
         <Box display={"flex"} flexDirection={imgRight ? "row-reverse" : "row"}>
-          <CardMedia component={"img"} image={image} sx={{ width: "30%" }} />
+          <CardMedia component={"img"} image={image} sx={{ width: "35%" }} />
           <CardContent sx={{ paddingX: "2rem" }}>
             <Typography variant={"h4"}>{title}</Typography>
             {children}
