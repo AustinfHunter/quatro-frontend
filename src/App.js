@@ -34,7 +34,7 @@ function App() {
         <AuthenticationDispatchContext.Provider value={dispatch}>
           <Box className="App">
             <NavBar />
-            <Box marginTop={"65px"}>
+            <Box marginTop={"75px"}>
               <ToastContainer position="top-center" />
               <Outlet />
             </Box>

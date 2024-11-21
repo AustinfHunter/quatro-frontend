@@ -46,14 +46,24 @@ const Chatbot = ({ initialMessages = [], loading }) => {
     setInput("");
     setIsSending(true);
 
-    queryBot(input).then((res) => {
-      const botResponse = {
-        text: res.data.type === "recipe" ? res.data.recipe : res.data.message,
-        sender: "bot",
-      };
-      setMessages((prevMessages) => [...prevMessages, botResponse]);
-      setIsSending(false);
-    });
+    queryBot(input)
+      .then((res) => {
+        const botResponse = {
+          text: res.data.type === "recipe" ? res.data.recipe : res.data.message,
+          sender: "bot",
+        };
+        setMessages((prevMessages) => [...prevMessages, botResponse]);
+        setIsSending(false);
+      })
+      .catch((e) => {
+        console.error(`Error getting message from bot: ${e}`);
+        const botResponse = {
+          text: "*Sorry, I couldn't process that message. Please try again.*",
+          sender: "bot",
+        };
+        setMessages((prevMessages) => [...prevMessages, botResponse]);
+        setIsSending(false);
+      });
   };
 
   return (

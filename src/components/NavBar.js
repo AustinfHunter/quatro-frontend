@@ -5,6 +5,7 @@ import {
   AuthenticationContext,
   AuthenticationDispatchContext,
 } from "../contexts/AuthenticationContext";
+import logo from "../images/logo.png";
 
 const AuthenticatedButtons = () => {
   const authenticated = useContext(AuthenticationContext);
@@ -85,6 +86,7 @@ const NavBar = () => {
       <AppBar>
         <Container>
           <Toolbar>
+            <img src={logo} alt={"quatro logo"} style={{ maxHeight: "80px" }} />
             <AuthenticatedButtons />
           </Toolbar>
         </Container>
