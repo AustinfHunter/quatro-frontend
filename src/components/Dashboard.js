@@ -14,6 +14,10 @@ const Charts = ({ data, loading }) => {
   if (!data || loading) {
     return <CircularProgress />;
   }
+
+  const calorieLimit = data.daily_macros.daily_calorie_limit
+    ? data.daily_macros.daily_calorie_limit
+    : 2000;
   return (
     <>
       <Box
@@ -30,16 +34,12 @@ const Charts = ({ data, loading }) => {
             height={200}
             value={data.daily_macros.total_calories}
             valueMin={0}
-            valueMax={
-              data.daily_macros.calorie_limit
-                ? data.daily_macros.daily_calorie_limit
-                : 2000
-            }
+            valueMax={calorieLimit}
           />
           <Typography variant="caption">
-            {data.daily_macros.calories >= data.daily_macros.daily_calorie_limit
+            {data.daily_macros.calories >= calorieLimit
               ? `You have no calories remaining for today`
-              : `You have ${Math.round((data.daily_macros.daily_calorie_limit ? data.daily_macros.daily_calorie_limit : 2000) - data.daily_macros.total_calories)} calories remaining for the day.`}
+              : `You have ${Math.round(calorieLimit - data.daily_macros.total_calories)} calories remaining for the day.`}
           </Typography>
         </Box>
         <MacroChart
