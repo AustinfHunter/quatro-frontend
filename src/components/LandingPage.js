@@ -1,7 +1,12 @@
-import { Container, Paper, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import { useContext } from "react";
 import { AuthenticationContext } from "../contexts/AuthenticationContext";
 import Dashboard from "./Dashboard";
+import splashImg from "../images/landing.jpg";
+import mealPlanImg from "../images/mealplan.jpg";
+import oldSplashImg from "../images/splash.jpg";
+import LandingPageCard from "./LandingPageCard";
+import { Link } from "react-router-dom";
 
 function LandingPage() {
   const authenticated = useContext(AuthenticationContext);
@@ -9,43 +14,70 @@ function LandingPage() {
     return <Dashboard />;
   } else
     return (
-      <Paper style={{ width: "80%", margin: "auto", padding: "20px" }}>
+      <Box>
+        <div
+          style={{
+            backgroundImage: `url(${splashImg})`,
+            height: "60vh",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            width: "100%",
+          }}
+        >
+          <Box width={"40%"} padding={"5%"}>
+            <Typography variant={"h4"} fontWeight={"bold"} textAlign={"left"}>
+              Tracking your nutrition doesn't have to be hard...
+            </Typography>
+            <Box width="70%">
+              <Typography
+                variant={"body1"}
+                fontSize={"1.3rem"}
+                textAlign={"left"}
+              >
+                Quatro empowers you to effortlessly track your nutrition,
+                monitor your weight goals, and stay on top of your daily
+                consumption habits, helping you make informed choices and stay
+                on track with your health journey every day.
+              </Typography>
+              <Box marginTop={"10px"}>
+                <Button
+                  color={"primary"}
+                  size={"large"}
+                  variant="contained"
+                  component={Link}
+                  to={"signup/"}
+                >
+                  Get Started Now
+                </Button>
+              </Box>
+            </Box>
+          </Box>
+        </div>
         <Container>
-          <Typography
-            variant="h2"
-            textAlign={"center"}
-            styles={styles.pageTitle}
+          <Typography variant="h6" textAlign={"left"}></Typography>
+          <LandingPageCard image={mealPlanImg} title={"Meal Planning"}>
+            <Typography variant={"p"} fontSize={"1.2rem"} textAlign={"left"}>
+              Quatro’s meal planning is fully customizable. It takes into
+              account your dietary preferences, restrictions, and goals to craft
+              a plan that fits your lifestyle—whether you’re vegan, gluten-free,
+              or simply trying to eat healthier.
+            </Typography>
+          </LandingPageCard>
+          <LandingPageCard
+            image={oldSplashImg}
+            title={"Recipe Generator"}
+            imgRight
           >
-            Quatro
-          </Typography>
-          <Typography
-            variant="body1"
-            textAlign={"center"}
-            styles={styles.paragraph}
-          >
-            Quatro is a nutrition app that allows users to track their
-            nutrition, weight goals, and daily consumption habits with ease. It
-            can be tough to keep track of daily consumption while also planning
-            meals and making time for exercise. Quatro is designed to make it
-            easy. QuatBot, the Quatro Chatbot, can help you plan meals, make
-            shopping lists, and analyze your eating habits - all according to
-            your personal goals and preferences.
-          </Typography>
+            <Typography variant={"p"} fontSize={"1.2rem"} textAlign={"left"}>
+              Get access to delicious, easy-to-follow recipes designed to help
+              you stay healthy without sacrificing flavor. Quatro’s recipe
+              generator takes the guesswork out of meal planning by providing
+              you with balanced, nutritious options you’ll love.
+            </Typography>
+          </LandingPageCard>
         </Container>
-      </Paper>
+      </Box>
     );
 }
 
-const styles = {
-  pageTitle: {
-    margin: "auto",
-    width: "60%",
-    padding: "100px",
-  },
-  paragraph: {
-    margin: "auto",
-    width: "60%",
-    padding: "40px",
-  },
-};
 export default LandingPage;
