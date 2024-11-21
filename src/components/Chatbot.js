@@ -48,7 +48,7 @@ const Chatbot = ({ initialMessages = [], loading }) => {
 
     queryBot(input).then((res) => {
       const botResponse = {
-        text: res.data.recipe,
+        text: res.data.type === "recipe" ? res.data.recipe : res.data.message,
         sender: "bot",
       };
       setMessages((prevMessages) => [...prevMessages, botResponse]);
