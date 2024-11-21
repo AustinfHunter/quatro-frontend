@@ -4,24 +4,19 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { getJournalTrends } from "../services/userService";
 
-const CalorieLineChart = ({ shouldUpdate, setShouldUpdate }) => {
+const CalorieLineChart = ({ currentDate }) => {
   const [chartData, setChartData] = useState(null);
-  const fetchData = () =>
-    getJournalTrends(dayjs().subtract(14, "days").format("YYYY-MM-DD")).then(
+
+  useEffect(() => {
+    setChartData(null);
+    getJournalTrends(currentDate.subtract(14, "day").format("YYYY-MM-DD")).then(
       (res) => {
-        console.log(res.data);
         setChartData(
-          res.data
-            .sort((a, b) => dayjs(a.date).diff(dayjs(b.date), "day"))
-            .map((d) => ({ x: d.date, y: d.calories })),
+          res.data.sort((a, b) => dayjs(a.date).diff(dayjs(b.date), "day")),
         );
       },
     );
-
-  useEffect(() => {
-    fetchData();
-    setShouldUpdate(false);
-  }, [shouldUpdate, setShouldUpdate]);
+  }, [currentDate]);
 
   if (chartData === null) {
     return <CircularProgress />;
@@ -29,21 +24,59 @@ const CalorieLineChart = ({ shouldUpdate, setShouldUpdate }) => {
 
   return (
     <Box textAlign={"left"}>
-      <Typography variant={"h4"}>Your daily trends</Typography>
-      <LineChart
-        dataset={chartData}
-        series={[{ dataKey: "y", label: "Calories" }]}
-        xAxis={[
-          {
-            dataKey: "x",
-            label: "Date",
-            scaleType: "band",
-            valueFormatter: (date) => dayjs(date).format("MM-DD"),
-          },
-        ]}
-        width={500}
-        height={300}
-      />
+      <Typography variant={"h4"}>Your Nutrition Trends</Typography>
+      <Box display={"flex"} flexDirection={"row"} justifyContent={"left"}>
+        <Box>
+          <LineChart
+            title="Calories"
+            dataset={chartData}
+            series={[{ dataKey: "calories", label: "Calories" }]}
+            xAxis={[
+              {
+                dataKey: "date",
+                label: "Date",
+                scaleType: "band",
+                valueFormatter: (date) => dayjs(date).format("MM-DD"),
+              },
+            ]}
+            width={500}
+            height={300}
+          />
+        </Box>
+        <Box>
+          <LineChart
+            title="Macros"
+            dataset={chartData}
+            series={[
+              {
+                dataKey: "protein",
+                label: "Protein",
+                valueFormatter: (p) => (p ? `${p.toFixed(2)}g` : `0.00g`),
+              },
+              {
+                dataKey: "fat",
+                label: "Fat",
+                valueFormatter: (f) => (f ? `${f.toFixed(2)}g` : "0.00g"),
+              },
+              {
+                dataKey: "carbs",
+                label: "Carbs",
+                valueFormatter: (c) => (c ? `${c.toFixed(2)}g` : "0.00g"),
+              },
+            ]}
+            xAxis={[
+              {
+                dataKey: "date",
+                label: "Date",
+                scaleType: "band",
+                valueFormatter: (date) => dayjs(date).format("MM-DD"),
+              },
+            ]}
+            width={500}
+            height={300}
+          />
+        </Box>
+      </Box>
     </Box>
   );
 };

@@ -5,6 +5,8 @@ import Dashboard from "./Dashboard";
 import splashImg from "../images/landing.jpg";
 import mealPlanImg from "../images/mealplan.jpg";
 import oldSplashImg from "../images/splash.jpg";
+import dataExampleImage from "../images/data-exm.png";
+import journalExampleImage from "../images/Journal-Exmp.png";
 import LandingPageCard from "./LandingPageCard";
 import { Link } from "react-router-dom";
 
@@ -73,6 +75,29 @@ function LandingPage() {
               you stay healthy without sacrificing flavor. Quatro’s recipe
               generator takes the guesswork out of meal planning by providing
               you with balanced, nutritious options you’ll love.
+            </Typography>
+          </LandingPageCard>
+          <LandingPageCard
+            image={dataExampleImage}
+            title={"Nutritional Insights"}
+          >
+            <Typography variant={"p"} fontSize={"1.2rem"} textAlign={"left"}>
+              Quatro gives you the knowledge you need to make better decisions
+              with every meal. Get personalized feedback on your daily intake,
+              and understand how small choices can lead to big health
+              improvements over time.
+            </Typography>
+          </LandingPageCard>
+          <LandingPageCard
+            image={journalExampleImage}
+            title={"Journalling and Tracking"}
+            imgRight
+          >
+            <Typography variant={"p"} fontSize={"1.2rem"} textAlign={"left"}>
+              Quatro gives you the knowledge you need to make better decisions
+              with every meal. Get personalized feedback on your daily intake,
+              and understand how small choices can lead to big health
+              improvements over time.
             </Typography>
           </LandingPageCard>
         </Container>

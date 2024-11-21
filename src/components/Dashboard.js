@@ -32,12 +32,14 @@ const Charts = ({ data, loading }) => {
             valueMin={0}
             valueMax={
               data.daily_macros.calorie_limit
-                ? Math.round(data.daily_macros.daily_calorie_limit)
+                ? data.daily_macros.daily_calorie_limit
                 : 2000
             }
           />
           <Typography variant="caption">
-            {`You have ${Math.round((data.daily_macros.daily_calorie_limit ? data.daily_macros.daily_calorie_limit : 2000) - data.daily_macros.total_calories)} calories remaining for the day.`}
+            {data.daily_macros.calories >= data.daily_macros.daily_calorie_limit
+              ? `You have no calories remaining for today`
+              : `You have ${Math.round((data.daily_macros.daily_calorie_limit ? data.daily_macros.daily_calorie_limit : 2000) - data.daily_macros.total_calories)} calories remaining for the day.`}
           </Typography>
         </Box>
         <MacroChart
@@ -52,7 +54,6 @@ const Charts = ({ data, loading }) => {
 const Dashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [chartShouldUpdate, setChartShouldUpdate] = useState(false);
   const selectedDate = useRef(dayjs(new Date()));
   const dateData = useRef(new Map());
 
@@ -69,7 +70,6 @@ const Dashboard = () => {
     getDashboardByDate(date.format("YYYY-MM-DD"))
       .then((res) => {
         setData(res.data);
-        setChartShouldUpdate(true);
         dateData.current.set(date.format("YYYY-MM-DD"), res.data);
       })
       .catch((err) => console.log(err));
@@ -104,10 +104,7 @@ const Dashboard = () => {
         />
       </LocalizationProvider>
       <Charts data={data} loading={loading} />
-      <CalorieLineChart
-        shouldUpdate={chartShouldUpdate}
-        setShouldUpdate={setChartShouldUpdate}
-      />
+      <CalorieLineChart currentDate={selectedDate.current} />
       <JournalEntries
         data={data}
         date={selectedDate.current}

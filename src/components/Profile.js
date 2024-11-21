@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { getUserProfile, updateUserProfile } from "../services/userService";
 
 const tmpProfile = {
+  age: 27,
   height: 177,
   current_weight: 83,
   goal_weight: 88,
@@ -151,6 +152,16 @@ const Profile = () => {
               <MenuItem value={500}>Moderately Active</MenuItem>
               <MenuItem value={700}>Very Active</MenuItem>
             </Select>
+          </FormControl>
+          <FormControl>
+            <TextField
+              label={`Age`}
+              name="age"
+              onChange={handleProfileChange}
+              type="number"
+              disabled={!isEditing}
+              defaultValue={profile.age}
+            />
           </FormControl>
           <Button variant="contained" onClick={handleEditClicked}>
             {isEditing ? "Save Changes" : "Edit"}
